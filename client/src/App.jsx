@@ -1,6 +1,6 @@
 import React from "react";
 import DjIcon from "./assets/DjIcon";
-import { FaUserAlt } from "react-icons/fa";
+import UserIcon from "./assets/UserIcon";
 
 export default function App() {
   return  (
@@ -13,7 +13,7 @@ export default function App() {
           <button
             className="p-0 md:mr-10 rounded-xl bg-black hover:bg-white hover:border hover:border-black"
           >
-            <FaUserAlt className="text-[270px] fill-current text-white hover:text-black mx-4 px-7" />
+            <UserIcon className="fill-current text-white hover:text-black p-5" />
           </button>
           <button
             className="p-0 md:ml-10 rounded-xl bg-black hover:bg-white hover:border hover:border-black"
