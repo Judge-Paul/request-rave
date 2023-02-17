@@ -1,6 +1,7 @@
 import React from "react";
 import DjIcon from "../assets/DjIcon";
 import UserIcon from "../assets/UserIcon";
+import { Link } from "react-router-dom";
 
 export default function Home() {
     return (
@@ -10,16 +11,22 @@ export default function Home() {
                 Which are you?
             </p>
             <div className="mt-10 px-5 grid md:grid-cols-2 gap-16 place-items-center">
-                <button
-                className="p-0 rounded-xl bg-white hover:bg-blue-900 border border-blue-900 w-full"
-                >
-                <UserIcon className="fill-current text-blue-900 hover:text-white p-5" />
-                </button>
-                <button
-                className="p-0 rounded-xl bg-white hover:bg-blue-900 border border-blue-900 w-full"
-                >
-                <DjIcon className="fill-current text-blue-900 hover:text-white p-5" />
-                </button>
+                <Link to="/request">
+                    <button
+                    href="/request"
+                    className="p-0 rounded-xl bg-white hover:bg-blue-900 border border-blue-900 w-full"
+                    >
+                        <UserIcon className="fill-current text-blue-900 hover:text-white p-5" />
+                    </button>
+                </Link>
+                <Link to="/dashboard">
+                    <button
+                    href="/dashboard"
+                    className="p-0 rounded-xl bg-white hover:bg-blue-900 border border-blue-900 w-full"
+                    >
+                        <DjIcon className="fill-current text-blue-900 hover:text-white p-5" />
+                    </button>
+                </Link>
             </div>
             </div>
         </div>
