@@ -5,8 +5,8 @@ import Tooltip from "@mui/material/Tooltip"
 
 export default function Song({title, artist, album, time, played}) {
     return (
-        <div className="flex border border-black rounded-lg bg-gray-100 mt-10">
-            <img src={IconLogo} alt="Icon" width="100px" />
+        <div className="flex border border-blue-900 rounded-lg bg-gray-100 mt-10 py-4">
+            <img src={IconLogo} alt="Icon" width="100px" className="rounded-xl" />
             <div className="my-auto pl-10">
                 <h4 className="text-3xl text-blue-900 font-bold">
                     {title}
@@ -16,7 +16,7 @@ export default function Song({title, artist, album, time, played}) {
                 </p>
             </div>
             <div className="flex my-auto ml-auto">
-                <p className="my-auto">
+                <p className="my-auto text-lg">
                     {album}
                 </p>
                 <p className="pl-10 text-2xl text-blue-400 font-bold pr-14">
