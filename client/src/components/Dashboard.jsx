@@ -4,7 +4,7 @@ import Song from "./Song";
 export default function Dashboard() {
     const [played, setPlayed] = useState(true)
     return (
-        <div className="pt-20 px-36">
+        <div className="pt-20 px-36 pb-14">
             <p className="text-4xl md:text-5xl font-bold text-blue-900 text-center">
                 Requests
             </p>
