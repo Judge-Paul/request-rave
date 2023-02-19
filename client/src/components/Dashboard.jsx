@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Song from "./Song";
 
-export default function Dashboard() {
+export default function Dashboard({ socket }) {
     const [played, setPlayed] = useState(true)
     return (
         <div className="pt-20 px-36 pb-14">
