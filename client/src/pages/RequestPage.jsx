@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 function RequestPage({ socket }) {
-  [message, setMessage] = useState("")
+  const [message, setMessage] = useState("")
 
   function handleSubmit(event) {
     event.preventDefault()

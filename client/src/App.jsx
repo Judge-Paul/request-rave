@@ -9,18 +9,7 @@ import {BrowserRouter, Routes, Route} from "react-router-dom";
 import io from "socket.io-client"
 
 export default function App() {
-  const [socket, setSocket] = useState(null);
-
-  useEffect(() => {
-    const newSocket = io("http://localhost:3001");
-
-    setSocket(newSocket);
-
-    return () => {
-      newSocket.disconnect();
-    };
-  }, []);
-
+  const socket = io.connect("http://localhost:3001");
   return  (
     <BrowserRouter>
       <NavBar />
