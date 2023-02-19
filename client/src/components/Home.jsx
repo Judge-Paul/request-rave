@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 export default function Home() {
     return (
-        <div className="w-full px-8 md:px-24 lg:px-48 xl:px-80 pt-24 mx-auto pb-14">
+        <div className="min-h-screen my-auto w-full px-4 md:px-24 lg:px-48 xl:px-80 pt-24 mx-auto mb-20 sm:mb-0">
             <div className="text-center">
                 <p className="text-4xl md:text-5xl font-bold text-blue-900">
                     Which are you?
