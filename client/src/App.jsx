@@ -9,7 +9,7 @@ import {BrowserRouter, Routes, Route} from "react-router-dom";
 import io from "socket.io-client"
 
 export default function App() {
-  const socket = io.connect("http://localhost:3001");
+  const socket = io.connect(`${import.meta.env.VITE_REACT_APP_SERVER_URL}`);
   return  (
     <BrowserRouter>
       <NavBar />
