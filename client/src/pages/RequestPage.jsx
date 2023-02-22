@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import Song from '../components/Song';
+import { FaSearch } from 'react-icons/fa';
 
 function RequestPage({ socket, accessToken }) {
   const [searchQuery, setSearchQuery] = useState("")
-  const [results, setResults] = useState("Hi")
+  const [results, setResults] = useState("")
 
   function search(event) {
     event.preventDefault();
@@ -52,30 +53,29 @@ function RequestPage({ socket, accessToken }) {
   }
 
   return (
-    <div className="flex items-center h-screen justify-center">
-      <div className="bg-gray-700 rounded-lg p-6">
-        <h2 className="text-white text-center pb-4">Request Song</h2>
-        <form onSubmit={search} className="flex flex-col gap-5">
-          <label htmlFor="song-title" className="text-white">
-            Song Title:
-          </label>
-          <input
-            className="mb-5 w-72 border-0 h-14 rounded-lg pl-5"
-            type="text"
-            name="song-title"
-            placeholder="Song or Artist Name"
-            onChange={handleChange}
-            value={searchQuery}
-          />
-          <button
-            className="text-white h-14 w-72 rounded-xl bg-blue-900 border-0"
-            type="submit"
-          >
-            Send Request
-          </button>
+    <div className="px-2 md:px-10 lg:px-40">
+        <form 
+          onSubmit={search} 
+          className="flex flex-col gap-5 my-5 focus-within:outline outline-[2px] outline-blue-900 rounded"
+        >
+            <div class="flex items-center border-[1px] rounded border-blue-900">
+              <input 
+                type="text" 
+                className="py-3 pl-6 pr-10 focus:outline-none rounded-l rounded-r-none w-full" 
+                placeholder="Song or Artist Name" 
+                onChange={handleChange} 
+                value={searchQuery} 
+              />
+              <button 
+                className="text-blue-900 pr-6" type="submit">
+                <FaSearch size={"22px"} />
+              </button>
+            </div>
         </form>
-        {results}
-      </div>
+        {results && 
+          <div class="h-48 overflow-y-scroll overflow-x-hidden bg-gray-200">
+            {results}
+          </div>}
     </div>
   );
 }
