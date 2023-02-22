@@ -1,13 +1,37 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import Song from '../components/Song';
 
 function RequestPage({ socket, accessToken }) {
   const [songName, setSongName] = useState("")
+  const [trackData, setTrackData] = useState(null)
 
   function search(event) {
-    event.preventDefault()
-    socket.emit("song-name", songName)
+    event.preventDefault();
+    axios.get(`https://api.spotify.com/v1/search?q=${encodeURIComponent(songName)}&type=track&market=US&include_external=audio`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
+    })
+    .then(response => {
+      console.log(response)
+      setTrackData(response.data.tracks.items);
+    })
+    .catch(error => {
+      console.error(error);
+    });
+    socket.emit("song-name", trackData)
     setSongName("")
   }
+
+  // let searchResultEl;
+  // function displayResults() {
+  //   if (isResultAvailable) {
+  //     searchResultEl = trackData.map(song => {
+  //       <Song title={trackData.track}/>
+  //     })
+  //   }
+  // }
 
   function handleChange(event) {
     setSongName(event.target.value)
