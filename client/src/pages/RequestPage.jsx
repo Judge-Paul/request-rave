@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Song from '../components/Song';
 import { FaSearch } from 'react-icons/fa';
+import { GrFormClose } from 'react-icons/gr';
 
 function RequestPage({ socket, accessToken }) {
   const [searchQuery, setSearchQuery] = useState("")
@@ -21,7 +22,6 @@ function RequestPage({ socket, accessToken }) {
       console.error(error);
     });
     // socket.emit("song-name", tracksData)
-    setSearchQuery("")
   }
 
   console.log(results)
@@ -33,32 +33,32 @@ function RequestPage({ socket, accessToken }) {
           artist.name += ", "
         }) )} 
         album={track.album.name} 
-        albumCover={track.album.images[0]} 
+        albumCover={track.album.images[0].url} 
       />
     })
     return searchResultsEl
   }
-
-  // let searchResultEl;
-  // function displayResults() {
-  //   if (isResultAvailable) {
-  //     searchResultEl = tracksData.map(song => {
-  //       <Song title={tracksData.track}/>
-  //     })
-  //   }
-  // }
 
   function handleChange(event) {
     setSearchQuery(event.target.value)
   }
 
   return (
-    <div className="px-2 md:px-10 lg:px-40">
+    <div className="mx-2 md:mx-10 lg:mx-40 my-10 focus-within:outline outline-[2px] outline-blue-900 border-[1px] border-blue-900 rounded">
         <form 
           onSubmit={search} 
-          className="flex flex-col gap-5 my-5 focus-within:outline outline-[2px] outline-blue-900 rounded"
+          className="flex flex-col gap-5"
         >
-            <div class="flex items-center border-[1px] rounded border-blue-900">
+            <div class="flex items-center">
+              {results && <button
+                className="pl-5"
+                onClick={()=> {
+                  setResults("")
+                  setSearchQuery("")
+                }}
+              >
+                <GrFormClose size={"22px"} />
+              </button>}
               <input 
                 type="text" 
                 className="py-3 pl-6 pr-10 focus:outline-none rounded-l rounded-r-none w-full" 
@@ -67,13 +67,14 @@ function RequestPage({ socket, accessToken }) {
                 value={searchQuery} 
               />
               <button 
-                className="text-blue-900 pr-6" type="submit">
+                className="text-blue-900 pr-6" type="submit"
+              >
                 <FaSearch size={"22px"} />
               </button>
             </div>
         </form>
         {results && 
-          <div class="h-48 overflow-y-scroll overflow-x-hidden bg-gray-200">
+          <div class="h-screen overflow-y-scroll px-2 md:px-8 pt-5">
             {results}
           </div>}
     </div>
