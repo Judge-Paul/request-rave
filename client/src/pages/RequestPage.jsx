@@ -3,38 +3,52 @@ import axios from 'axios';
 import Song from '../components/Song';
 
 function RequestPage({ socket, accessToken }) {
-  const [songName, setSongName] = useState("")
-  const [trackData, setTrackData] = useState(null)
+  const [searchQuery, setSearchQuery] = useState("")
+  const [results, setResults] = useState("Hi")
 
   function search(event) {
     event.preventDefault();
-    axios.get(`https://api.spotify.com/v1/search?q=${encodeURIComponent(songName)}&type=track&market=US&include_external=audio`, {
+    axios.get(`https://api.spotify.com/v1/search?q=${encodeURIComponent(searchQuery)}&type=track&market=US&include_external=audio`, {
       headers: {
         Authorization: `Bearer ${accessToken}`
       }
     })
     .then(response => {
-      console.log(response)
-      setTrackData(response.data.tracks.items);
+      setResults(displayResults(response.data.tracks.items))
     })
     .catch(error => {
       console.error(error);
     });
-    socket.emit("song-name", trackData)
-    setSongName("")
+    // socket.emit("song-name", tracksData)
+    setSearchQuery("")
+  }
+
+  console.log(results)
+  function displayResults(tracks) {
+    const searchResultsEl = tracks.map(track => {
+      return <Song 
+        title={track.name} 
+        artist={track.artists.map(((artist) => {
+          artist.name += ", "
+        }) )} 
+        album={track.album.name} 
+        albumCover={track.album.images[0]} 
+      />
+    })
+    return searchResultsEl
   }
 
   // let searchResultEl;
   // function displayResults() {
   //   if (isResultAvailable) {
-  //     searchResultEl = trackData.map(song => {
-  //       <Song title={trackData.track}/>
+  //     searchResultEl = tracksData.map(song => {
+  //       <Song title={tracksData.track}/>
   //     })
   //   }
   // }
 
   function handleChange(event) {
-    setSongName(event.target.value)
+    setSearchQuery(event.target.value)
   }
 
   return (
@@ -51,7 +65,7 @@ function RequestPage({ socket, accessToken }) {
             name="song-title"
             placeholder="Song or Artist Name"
             onChange={handleChange}
-            value={songName}
+            value={searchQuery}
           />
           <button
             className="text-white h-14 w-72 rounded-xl bg-blue-900 border-0"
@@ -60,6 +74,7 @@ function RequestPage({ socket, accessToken }) {
             Send Request
           </button>
         </form>
+        {results}
       </div>
     </div>
   );

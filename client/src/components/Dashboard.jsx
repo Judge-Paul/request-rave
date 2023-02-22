@@ -33,8 +33,8 @@ export default function Dashboard({ socket }) {
             <p className="pt-20 text-3xl md:text-4xl font-bold text-blue-900 text-center">
                 Recently Played
             </p>
-            <Song title="Rush" artist="Arya Starr" album="19 & Dangerous" time="4:09" played={played} />
-            <Song title="Rapstar" artist="Polo G" album="Hall of Fame" time="3:32" played={played} /> */}
+            <Song title="Rush" artist="Arya Starr" album="19 & Dangerous" time="4:09" isPlayable={played} />
+            <Song title="Rapstar" artist="Polo G" album="Hall of Fame" time="3:32" isPlayable={played} /> */}
         </div>
     )
 }
