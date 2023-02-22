@@ -16,7 +16,7 @@ const io = new Server(server, {
 })
 
 io.on("connection", socket => {
-    socket.on("message", data => {
+    socket.on("song-name", data => {
         io.emit("receive-message", data)
     })
 })

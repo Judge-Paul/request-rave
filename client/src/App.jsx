@@ -43,7 +43,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/dashboard" element={<DashboardPage socket={socket} />} />
-          <Route path="/request" element={<RequestPage socket={socket} />} />
+          <Route path="/request" element={<RequestPage socket={socket} accessToken={accessToken} />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       <Footer />
