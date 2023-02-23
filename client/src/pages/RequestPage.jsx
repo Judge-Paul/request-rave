@@ -1,37 +1,42 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import Song from '../components/Song';
 import { FaSearch } from 'react-icons/fa';
 import { GrFormClose } from 'react-icons/gr';
+import CircularProgress from '@mui/material/CircularProgress';
+import SearchItem from '../components/SearchItem';
 
 function RequestPage({ socket, accessToken }) {
   const [searchQuery, setSearchQuery] = useState("")
   const [results, setResults] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
 
   function search(event) {
-    event.preventDefault();
-    axios.get(`https://api.spotify.com/v1/search?q=${encodeURIComponent(searchQuery)}&type=track&market=US&include_external=audio`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`
-      }
-    })
-    .then(response => {
-      setResults(displayResults(response.data.tracks.items))
-    })
-    .catch(error => {
-      console.error(error);
-    });
+    if (!isLoading) {
+      setResults("")
+      setIsLoading(true)
+      event.preventDefault();
+      axios.get(`https://api.spotify.com/v1/search?q=${encodeURIComponent(searchQuery)}&type=track&market=US&include_external=audio`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      })
+      .then(response => {
+        console.log(response.data.tracks.items[0].artists)
+        setResults(displayResults(response.data.tracks.items))
+        setIsLoading(false)
+      })
+      .catch(error => {
+        console.error(error);
+      });
+    }
     // socket.emit("song-name", tracksData)
   }
 
-  console.log(results)
   function displayResults(tracks) {
     const searchResultsEl = tracks.map(track => {
-      return <Song 
+      return <SearchItem
         title={track.name} 
-        artist={track.artists.map(((artist) => {
-          artist.name += ", "
-        }) )} 
+        artists={track.artists} 
         album={track.album.name} 
         albumCover={track.album.images[0].url} 
       />
@@ -49,9 +54,10 @@ function RequestPage({ socket, accessToken }) {
           onSubmit={search} 
           className="flex flex-col gap-5"
         >
-            <div class="flex items-center">
+            <div className="flex">
               {results && <button
                 className="pl-5"
+                type="button"
                 onClick={()=> {
                   setResults("")
                   setSearchQuery("")
@@ -69,12 +75,12 @@ function RequestPage({ socket, accessToken }) {
               <button 
                 className="text-blue-900 pr-6" type="submit"
               >
-                <FaSearch size={"22px"} />
+                {!isLoading ? <FaSearch size="22px" /> : <CircularProgress size="22px" />}
               </button>
             </div>
         </form>
-        {results && 
-          <div class="h-screen overflow-y-scroll px-2 md:px-8 pt-5">
+        {results !== "" && 
+          <div className="h-3/5 overflow-y-scroll px-4 md:px-6">
             {results}
           </div>}
     </div>
