@@ -4,11 +4,14 @@ import { FaSearch } from 'react-icons/fa';
 import { GrFormClose } from 'react-icons/gr';
 import CircularProgress from '@mui/material/CircularProgress';
 import SearchItem from './SearchItem';
+import DialogModal from './ConfirmModal';
 
 function Request({ socket, accessToken }) {
   const [searchQuery, setSearchQuery] = useState("")
   const [results, setResults] = useState("")
   const [isLoading, setIsLoading] = useState(false)
+  const [showModal, setShowModal] = useState(false)
+  const [selected, setSelected] = useState("")
 
   function search(event) {
     if (!isLoading) {
@@ -28,11 +31,11 @@ function Request({ socket, accessToken }) {
         console.error(error);
       });
     }
-    // socket.emit("song-name", tracksData)
   }
 
   function selectTrack(id) {
-    console.log(id)
+    setShowModal(true)
+    setSelected(id)
   }
 
   function displayResults(tracks) {
@@ -56,6 +59,7 @@ function Request({ socket, accessToken }) {
 
   return (
     <>
+        {showModal && <DialogModal showModal={showModal} selectedId={selected} socket={socket} />}
         <p className="text-4xl md:text-5xl font-bold text-blue-900 text-center mt-10">
             Select a track
         </p>
