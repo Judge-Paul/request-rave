@@ -21,7 +21,6 @@ function RequestPage({ socket, accessToken }) {
         }
       })
       .then(response => {
-        console.log(response.data.tracks.items[0].artists)
         setResults(displayResults(response.data.tracks.items))
         setIsLoading(false)
       })
@@ -32,13 +31,20 @@ function RequestPage({ socket, accessToken }) {
     // socket.emit("song-name", tracksData)
   }
 
+  function selectTrack(id) {
+    console.log(id)
+  }
+
   function displayResults(tracks) {
     const searchResultsEl = tracks.map(track => {
       return <SearchItem
+        id={track.id}
+        key={track.id}
         title={track.name} 
         artists={track.artists} 
         album={track.album.name} 
         albumCover={track.album.images[0].url} 
+        onclick={selectTrack}
       />
     })
     return searchResultsEl
@@ -63,7 +69,7 @@ function RequestPage({ socket, accessToken }) {
                   setSearchQuery("")
                 }}
               >
-                <GrFormClose size={"22px"} />
+                <GrFormClose size={"30px"} />
               </button>}
               <input 
                 type="text" 
@@ -80,7 +86,7 @@ function RequestPage({ socket, accessToken }) {
             </div>
         </form>
         {results !== "" && 
-          <div className="h-3/5 overflow-y-scroll px-4 md:px-6">
+          <div className="h-screen overflow-y-scroll px-4 md:px-6">
             {results}
           </div>}
     </div>
