@@ -16,7 +16,7 @@ function Request({ socket, accessToken }) {
   function handleChange(event) {
     setSearchQuery(event.target.value)
   }
-  
+
   function search(event) {
     if (!isLoading) {
       setResults("")
@@ -28,7 +28,6 @@ function Request({ socket, accessToken }) {
         }
       })
       .then(response => {
-        console.log(response.data.tracks.items)
         setResults(displayResults(response.data.tracks.items))
         setIsLoading(false)
       })
@@ -69,7 +68,7 @@ function Request({ socket, accessToken }) {
 
   return (
     <>
-        {showModal && <ConfirmModal showModal={showModal} selectedId={selected} socket={socket} confirmSelection={() => confirmSelection()} />}
+        {showModal && <ConfirmModal showModal={showModal} selectedId={selected} socket={socket} confirmSelection={confirmSelection} />}
         <p className="text-4xl md:text-5xl font-bold text-blue-900 text-center mt-10">
             Select a track
         </p>

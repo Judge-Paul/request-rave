@@ -60,11 +60,19 @@ export default function Dashboard({ socket, accessToken }) {
   }, [trackIds, accessToken]);
 
   return (
-    <div className="min-h-screen pt-20 px-36 pb-14">
-      <p className="text-4xl md:text-5xl font-bold text-blue-900 text-center">
+    <div className="min-h-screen pt-10 pb-14">
+      {songs === [] ? <div className="flex h-[60vh] justify-center items-center p-0 m-0">
+            <p className="text-center text-xl">No songs requested yet</p>
+      </div>:
+      <>
+      <p className="text-3xl md:text-5xl font-bold text-blue-900 text-center">
         Requests
       </p>
-      {songs}
+      <div>
+        {songs}
+      </div>
+      </>
+      }
       <p className="pt-20 text-3xl md:text-4xl font-bold text-blue-900 text-center">
         Recently Played
       </p>

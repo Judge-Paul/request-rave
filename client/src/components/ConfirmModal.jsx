@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 
-export default function ConfirmModal({ showModal, selectedId, socket, confirmSelection }) {
+export default function ConfirmModal({ showModal, confirmSelection }) {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
