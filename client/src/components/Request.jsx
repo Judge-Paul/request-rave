@@ -13,6 +13,10 @@ function Request({ socket, accessToken }) {
   const [showModal, setShowModal] = useState(false)
   const [selected, setSelected] = useState("")
 
+  function handleChange(event) {
+    setSearchQuery(event.target.value)
+  }
+  
   function search(event) {
     if (!isLoading) {
       setResults("")
@@ -61,10 +65,6 @@ function Request({ socket, accessToken }) {
       />
     })
     return searchResultsEl
-  }
-
-  function handleChange(event) {
-    setSearchQuery(event.target.value)
   }
 
   return (
