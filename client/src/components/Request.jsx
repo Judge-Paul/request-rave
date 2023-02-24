@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { FaSearch } from 'react-icons/fa';
+import { FaHandPointLeft, FaSearch } from 'react-icons/fa';
 import { GrFormClose } from 'react-icons/gr';
 import CircularProgress from '@mui/material/CircularProgress';
 import SearchItem from './SearchItem';
@@ -39,6 +39,15 @@ function Request({ socket, accessToken }) {
     setSelected(id)
   }
 
+  function confirmSelection(confirmed) {
+    if(confirmed) {
+        setShowModal(false)
+        socket.emit("song-name", selected)
+    } else {
+        setShowModal(false)
+    }
+  }
+
   function displayResults(tracks) {
     const searchResultsEl = tracks.map(track => {
       return <SearchItem
@@ -60,7 +69,7 @@ function Request({ socket, accessToken }) {
 
   return (
     <>
-        {showModal && <ConfirmModal showModal={showModal} selectedId={selected} socket={socket} />}
+        {showModal && <ConfirmModal showModal={showModal} selectedId={selected} socket={socket} confirmSelection={() => confirmSelection()} />}
         <p className="text-4xl md:text-5xl font-bold text-blue-900 text-center mt-10">
             Select a track
         </p>
