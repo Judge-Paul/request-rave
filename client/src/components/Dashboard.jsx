@@ -27,6 +27,7 @@ export default function Dashboard({ socket, accessToken }) {
         })
         .then((response) => {
           console.log(response.data);
+          console.log(response.data)
           const songData = response.data;
           const artist = Array.isArray(songData.artists)
             ? songData.artists.map((a) => a.name).join(", ")
@@ -39,7 +40,7 @@ export default function Dashboard({ socket, accessToken }) {
                     title={songData.name}
                     artist={artist}
                     album={songData.album.name}
-                    time="3:32"
+                    link={songData.external_urls.spotify}
                   />
                 );
                 if (prev.find(song => song.key === newSong.key)) {
@@ -61,14 +62,15 @@ export default function Dashboard({ socket, accessToken }) {
 
   return (
     <div className="min-h-screen pt-10 pb-14">
-      {songs === [] ? <div className="flex h-[60vh] justify-center items-center p-0 m-0">
-            <p className="text-center text-xl">No songs requested yet</p>
+      {songs === [] ? 
+      <div className="flex h-[60vh] justify-center items-center p-0 m-0">
+        <p className="text-center text-xl">No songs requested yet</p>
       </div>:
       <>
       <p className="text-3xl md:text-5xl font-bold text-blue-900 text-center">
         Requests
       </p>
-      <div>
+      <div className="mx-4 md:mx-20 lg:mx-32">
         {songs}
       </div>
       </>
