@@ -4,7 +4,7 @@ import { FaSearch } from 'react-icons/fa';
 import { GrFormClose } from 'react-icons/gr';
 import CircularProgress from '@mui/material/CircularProgress';
 import SearchItem from './SearchItem';
-import DialogModal from './ConfirmModal';
+import ConfirmModal from './ConfirmModal';
 
 function Request({ socket, accessToken }) {
   const [searchQuery, setSearchQuery] = useState("")
@@ -24,6 +24,7 @@ function Request({ socket, accessToken }) {
         }
       })
       .then(response => {
+        console.log(response.data.tracks.items)
         setResults(displayResults(response.data.tracks.items))
         setIsLoading(false)
       })
@@ -46,7 +47,7 @@ function Request({ socket, accessToken }) {
         title={track.name} 
         artists={track.artists} 
         album={track.album.name} 
-        albumCover={track.album.images[0].url} 
+        albumCover={track.album.images[2].url} 
         onclick={selectTrack}
       />
     })
@@ -59,11 +60,11 @@ function Request({ socket, accessToken }) {
 
   return (
     <>
-        {showModal && <DialogModal showModal={showModal} selectedId={selected} socket={socket} />}
+        {showModal && <ConfirmModal showModal={showModal} selectedId={selected} socket={socket} />}
         <p className="text-4xl md:text-5xl font-bold text-blue-900 text-center mt-10">
             Select a track
         </p>
-        <div className="mx-2 md:mx-10 lg:mx-40 mt-6 focus-within:outline outline-[2px] outline-blue-900 border-[1px] border-blue-900 rounded">
+        <div className="mx-2 md:mx-10 lg:mx-40 mt-6 focus-within:outline outline-[2px] outline-blue-900 border-[1px] border-blue-900 rounded mb-10">
             <form 
             onSubmit={search} 
             className="flex flex-col gap-5"

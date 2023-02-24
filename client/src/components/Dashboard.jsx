@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import Song from "./Song";
+import axios from "axios";
 
-export default function Dashboard({ socket }) {
+export default function Dashboard({ socket, accessToken }) {
     const [played, setPlayed] = useState(true);
-    const [messages, setMessages] = useState([]);
-    console.log(messages)
+    const [songs, setSongs] = useState([]);
+    const [trackIds, setTrackIds] = useState([]);
+
     useEffect(() => {
-        socket.on("receive-message", (message) => {
-            setMessages((messages) => [...messages, message]);
-            console.log(socket.id)
+        socket.on("receive-message", (trackId) => {
+            setTrackIds((trackIds) => [...trackIds, trackId]);
         });
     
         return () => {
@@ -16,14 +17,37 @@ export default function Dashboard({ socket }) {
         };
     }, [socket]);
 
+    useEffect(() => {
+        trackIds.map((trackId) => {
+            let url = `https://api.spotify.com/v1/tracks/${trackId}`
+            axios.get(url, {
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`
+                }
+                })
+                .then(response => {
+                console.log(response.data);
+                setSongs(displaySongs(response.data))
+                })
+                .catch(error => {
+                console.log(error);
+                });
+        })
+    }, [trackIds]) 
+
+    function displaySongs({name, artists, album }) {
+        const artist = Array.isArray(artists) ? artists.map(a => a.name).join(", ") : (artists && artists.name)
+        return <Song albumCover={album.images[2].url} title={name} artist={artist} album={album.name} time="3:32" />
+    }
     return (
-        <div className="pt-20 px-36 pb-14">
+        <div className="min-h-screen pt-20 px-36 pb-14">
             <h1>Dashboard Page</h1>
-            <ul>
+            {songs}
+            {/* <ul>
                 {messages.map((message, index) => (
                     <li key={index}>{message}</li>
                 ))}
-            </ul>
+            </ul> */}
             {/* <p className="text-4xl md:text-5xl font-bold text-blue-900 text-center">
                 Requests
             </p>
