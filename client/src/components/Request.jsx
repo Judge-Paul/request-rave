@@ -68,7 +68,7 @@ function Request({ socket, accessToken }) {
 
   return (
     <>
-        {showModal && <ConfirmModal showModal={showModal} selectedId={selected} socket={socket} confirmSelection={confirmSelection} />}
+        {showModal && <ConfirmModal showModal={showModal} confirmSelection={confirmSelection} />}
         <p className="text-4xl md:text-5xl font-bold text-blue-900 text-center mt-10">
             Select a track
         </p>

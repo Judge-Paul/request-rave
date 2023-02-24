@@ -47,7 +47,6 @@ export default function Dashboard({ socket, accessToken }) {
                   // Song already exists in the array, return previous array
                   return prev;
                 } else {
-                  // Add new song to the array
                   return [...prev, newSong];
                 }
               });
@@ -62,22 +61,22 @@ export default function Dashboard({ socket, accessToken }) {
 
   return (
     <div className="min-h-screen pt-10 pb-14">
-      {songs === [] ? 
+      {songs.length > 0 ? 
+      <>
+        <p className="text-3xl md:text-5xl font-bold text-blue-900 text-center">
+            Requests
+        </p>
+        <div className="mx-4 md:mx-20 lg:mx-32">
+            {songs}
+        </div>
+      </>:
       <div className="flex h-[60vh] justify-center items-center p-0 m-0">
         <p className="text-center text-xl">No songs requested yet</p>
-      </div>:
-      <>
-      <p className="text-3xl md:text-5xl font-bold text-blue-900 text-center">
-        Requests
-      </p>
-      <div className="mx-4 md:mx-20 lg:mx-32">
-        {songs}
       </div>
-      </>
       }
-      <p className="pt-20 text-3xl md:text-4xl font-bold text-blue-900 text-center">
+      {/* <p className="pt-20 text-3xl md:text-4xl font-bold text-blue-900 text-center">
         Recently Played
-      </p>
+      </p> */}
     </div>
   );
 }
