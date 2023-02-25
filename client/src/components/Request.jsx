@@ -28,7 +28,7 @@ function Request({ socket, accessToken }) {
       setResults("")
       setIsLoading(true)
       event.preventDefault();
-      axios.get(`https://api.spotify.com/v1/search?q=${encodeURIComponent(searchQuery)}&type=track&market=US&include_external=audio`, {
+      axios.get(`https://api.spotify.com/v1/search?q=${encodeURIComponent(searchQuery)}&type=track&market=NG&include_external=audio`, {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
@@ -54,7 +54,6 @@ function Request({ socket, accessToken }) {
     })
   }
 
-  console.log(hasRequested)
   function confirmSelection(confirmed) {
     if(confirmed) {
         setShowModal(false)
