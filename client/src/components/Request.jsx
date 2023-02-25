@@ -1,17 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FaHandPointLeft, FaSearch } from 'react-icons/fa';
 import { GrFormClose } from 'react-icons/gr';
 import CircularProgress from '@mui/material/CircularProgress';
 import SearchItem from './SearchItem';
 import ConfirmModal from './ConfirmModal';
+import Countdown from './Countdown';
 
 function Request({ socket, accessToken }) {
   const [searchQuery, setSearchQuery] = useState("")
   const [results, setResults] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [showModal, setShowModal] = useState(false)
-  const [selected, setSelected] = useState("")
+  const [selected, setSelected] = useState({
+    id: "",
+    title: "",
+    artists: ""
+  })
+  const [hasRequested, setHasRequested] = useState(false)
 
   function handleChange(event) {
     setSearchQuery(event.target.value)
@@ -34,20 +40,35 @@ function Request({ socket, accessToken }) {
       .catch(error => {
         console.error(error);
       });
+    } else if (hasRequested) {
+      setSearchQuery("")
     }
   }
 
-  function selectTrack(id) {
+  function selectTrack(id, title, artist) {
     setShowModal(true)
-    setSelected(id)
+    setSelected({
+      id: id,
+      title: title,
+      artists: artist
+    })
   }
 
+  console.log(hasRequested)
   function confirmSelection(confirmed) {
     if(confirmed) {
         setShowModal(false)
-        socket.emit("song-name", selected)
+        socket.emit("song-id", selected.id)
+        setHasRequested(true);
     } else {
         setShowModal(false)
+        setSearchQuery("")
+        setResults("")
+        setSelected({
+          id: "",
+          title: "",
+          artists: ""
+        })
     }
   }
 
@@ -66,9 +87,17 @@ function Request({ socket, accessToken }) {
     return searchResultsEl
   }
 
+  useEffect(() => {
+    if(hasRequested) {
+      setSearchQuery("")
+      alert("You have already made a request in the last five minutes hold on until the timer ends")
+    }
+  }, [searchQuery])
+
   return (
     <>
-        {showModal && <ConfirmModal showModal={showModal} confirmSelection={confirmSelection} />}
+        {hasRequested && <Countdown onCountdownEnd={() => {setHasRequested(false)}} />}
+        {showModal && <ConfirmModal showModal={showModal} trackName={selected.title} trackArtists={selected.artists} confirmSelection={confirmSelection} />}
         <p className="text-4xl md:text-5xl font-bold text-blue-900 text-center mt-10">
             Select a track
         </p>

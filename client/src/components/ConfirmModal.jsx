@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 
-export default function ConfirmModal({ showModal, confirmSelection }) {
+export default function ConfirmModal({ showModal, confirmSelection, trackName, trackArtists }) {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -35,7 +35,7 @@ export default function ConfirmModal({ showModal, confirmSelection }) {
           <Button onClick={handleClose}>X</Button>
         </Box>
         <Typography sx={{ mt: 2 }}>
-          Do you want to request for this song to be played? If you do so, you won't be able to request another song be played for the next 5 minutes.
+          Do you want to request for "{trackName}" by {trackArtists} to be played? If you do so, you won't be able to request another song be played for the next 5 minutes.
         </Typography>
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
           <Button variant="contained" onClick={handleClose} sx={{ mr: 1 }}>
