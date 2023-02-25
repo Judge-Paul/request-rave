@@ -36,7 +36,7 @@ export default function Dashboard({ socket, accessToken }) {
                 const newSong = (
                   <Song
                     key={songData.id}
-                    albumCover={songData.album.images[0].url}
+                    albumCover={songData.album.images[1].url}
                     title={songData.name}
                     artist={artist}
                     album={songData.album.name}

@@ -10,10 +10,10 @@ export default function SearchItem({ id, onclick, albumCover, title, artists}) {
         >
                 <img src={albumCover} alt="Icon" width="100px" className="rounded" />
                 <div className="my-auto ml-2 md:ml-10">
-                    <h4 className="text-left text-2xl font-bold">
+                    <h4 className="text-left text-2xl font-bold truncate w-40 sm:w-80 md:w-96">
                         {title}
                     </h4>
-                    <p className="text-left text-gray-400">
+                    <p className="text-left text-gray-400 truncate w-40 sm:w-80 md:w-96">
                         {artist}
                     </p>
                 </div>

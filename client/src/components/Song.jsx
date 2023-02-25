@@ -1,5 +1,5 @@
 import React from "react";
-import { FaFlag, FaPlay } from "react-icons/fa";
+import { FaFlag, FaPlay, FaSpotify } from "react-icons/fa";
 import Tooltip from "@mui/material/Tooltip";
 
 export default function Song({ title, artist, album, albumCover, link, wasPlayed }) {
@@ -21,7 +21,8 @@ export default function Song({ title, artist, album, albumCover, link, wasPlayed
           </p>
         </div>
         {(
-          <div className="flex items-center mt-4 sm:mt-0">
+          <>
+          <div className="hidden sm:flex items-center mt-4 sm:mt-0">
             <Tooltip placement="top" title="Play on Spotify" arrow>
               <a href={link} target="_blank" className="mr-4">
                 <FaPlay className="text-green-500" size="40px" />
@@ -33,6 +34,21 @@ export default function Song({ title, artist, album, albumCover, link, wasPlayed
               </button>
             </Tooltip>
           </div>
+          <div className="sm:hidden w-full">
+            <a 
+              href={link} 
+              target="_blank" 
+              className="flex text-2xl text-white font-bold justify-center w-full bg-green-500 hover:bg-green-300 py-5 rounded-xl"
+            >
+              Play on Spotify <FaSpotify size="30px" className="pl-1" />
+            </a>
+            <button
+              className="mt-4 flex text-2xl text-white font-bold justify-center w-full bg-red-500 hover:bg-red-300 py-5 rounded-xl"
+            >
+              Mark as unavailable
+            </button>
+          </div>
+          </>
         )}
       </div>
     </div>
