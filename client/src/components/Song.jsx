@@ -2,7 +2,7 @@ import React from "react";
 import { FaFlag, FaPlay, FaSpotify } from "react-icons/fa";
 import Tooltip from "@mui/material/Tooltip";
 
-export default function Song({ id, title, artist, album, albumCover, link, removeSong, wasPlayed }) {
+export default function Song({ id, title, artist, album, albumCover, link, removeSong }) {
   return (
     <div className="border border-blue-900 rounded-lg bg-gray-100 mt-8 p-4 sm:p-6">
       <div className="flex flex-col sm:flex-row sm:justify-between">

@@ -3,8 +3,8 @@ import Song from "./Song";
 import axios from "axios";
 
 export default function Dashboard({ socket, accessToken }) {
-  const [songs, setSongs] = useState([]);
-  const [trackIds, setTrackIds] = useState([]);
+  const [songs, setSongs] = useState([])
+  const [trackIds, setTrackIds] = useState([])
 
   useEffect(() => {
     socket.emit('get-stored-ids');
@@ -90,9 +90,6 @@ export default function Dashboard({ socket, accessToken }) {
         <p className="text-center text-xl">No songs requested yet</p>
       </div>
       }
-      {/* <p className="pt-20 text-3xl md:text-4xl font-bold text-blue-900 text-center">
-        Recently Played
-      </p> */}
     </div>
   );
 }
