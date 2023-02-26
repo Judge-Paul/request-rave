@@ -13,6 +13,10 @@ export default function Dashboard({ socket, accessToken }) {
       setTrackIds(messages);
     });
 
+    socket.on("remove-id", (id) => {
+      setSongs((prevState) => prevState.filter((song) => song.key !== id));
+    });
+
     socket.on("receive-id", (trackId) => {
       setTrackIds((trackIds) => [...trackIds, trackId]);
     });
@@ -22,6 +26,11 @@ export default function Dashboard({ socket, accessToken }) {
       socket.off("receive-id");
     };
   }, [socket]);
+
+  function removeSong(id) {
+    setSongs((prevState) => prevState.filter((song) => song.key !== id));
+    socket.emit("remove-song", id);
+  }
 
   useEffect(() => {
     const requests = trackIds.map((trackId) => {
@@ -33,8 +42,6 @@ export default function Dashboard({ socket, accessToken }) {
           },
         })
         .then((response) => {
-          console.log(response.data);
-          console.log(response.data)
           const songData = response.data;
           const artist = Array.isArray(songData.artists)
             ? songData.artists.map((a) => a.name).join(", ")
@@ -42,12 +49,14 @@ export default function Dashboard({ socket, accessToken }) {
             setSongs(prev => {
                 const newSong = (
                   <Song
+                    id={songData.id}
                     key={songData.id}
                     albumCover={songData.album.images[1].url}
                     title={songData.name}
                     artist={artist}
                     album={songData.album.name}
                     link={songData.external_urls.spotify}
+                    removeSong={() => removeSong(songData.id)}
                   />
                 );
                 if (prev.find(song => song.key === newSong.key)) {

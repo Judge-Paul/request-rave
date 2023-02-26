@@ -33,6 +33,14 @@ io.on("connection", (socket) => {
     }, 30 * 60 * 1000) // 30 minutes in milliseconds
   })
 
+  socket.on("remove-song", (id) => {
+    const index = storedIds.indexOf(id);
+    if (index !== -1) {
+      storedIds.splice(index, 1);
+      io.emit("remove-id", id);
+    }
+  });
+  
   socket.on("get-stored-ids", () => {
     // Send the stored messages to the client
     socket.emit("stored-ids", storedIds)
