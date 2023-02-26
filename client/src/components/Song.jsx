@@ -24,7 +24,7 @@ export default function Song({ id, title, artist, album, albumCover, link, remov
           <>
           <div className="hidden sm:flex items-center mt-4 sm:mt-0">
             <Tooltip placement="top" title="Play on Spotify" arrow>
-              <a href={link} target="_blank" className="mr-4">
+              <a href={link} target="_blank" className="mr-4" onClick={() => removeSong(id)}>
                 <FaPlay className="text-green-500" size="40px" />
               </a>
             </Tooltip>
@@ -39,6 +39,7 @@ export default function Song({ id, title, artist, album, albumCover, link, remov
               href={link} 
               target="_blank" 
               className="flex text-2xl text-white font-bold justify-center w-full bg-green-500 hover:bg-green-300 py-5 rounded-xl"
+              onClick={() => removeSong(id)}
             >
               Play on Spotify <FaSpotify size="30px" className="pl-1" />
             </a>
