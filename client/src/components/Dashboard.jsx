@@ -7,12 +7,19 @@ export default function Dashboard({ socket, accessToken }) {
   const [trackIds, setTrackIds] = useState([]);
 
   useEffect(() => {
-    socket.on("receive-message", (trackId) => {
+    socket.emit('get-stored-ids');
+
+    socket.on('stored-ids', (messages) => {
+      setTrackIds(messages);
+    });
+
+    socket.on("receive-id", (trackId) => {
       setTrackIds((trackIds) => [...trackIds, trackId]);
     });
 
     return () => {
-      socket.off("receive-message");
+      socket.off('stored-ids');
+      socket.off("receive-id");
     };
   }, [socket]);
 

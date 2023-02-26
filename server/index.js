@@ -9,35 +9,30 @@ const server = http.createServer(app)
 
 
 const io = new Server(server, {
-    cors:{
-        origin: ["http://localhost:5173", "https://request-rave.onrender.com", "https://request-rave.vercel.app"],
-        methods: ["GET", "POST"],
-    }
+  cors:{
+    origin: ["http://localhost:5173", "https://request-rave.onrender.com", "https://request-rave.vercel.app"],
+    methods: ["GET", "POST"],
+  }
 })
+
+let storedIds = []
 
 io.on("connection", socket => {
-    socket.on("song-id", data => {
-        io.emit("receive-message", data)
-    })
+  socket.on("song-id", data => {
+    storedIds.push(data)
+    io.emit("receive-id", data)
+  });
+
+  socket.on('get-stored-ids', () => {
+    // Send the stored messages to the client
+    socket.emit('stored-ids', storedIds)
+  })
+
+  socket.on('disconnect', () => {
+    console.log(`Socket ${socket.id} disconnected`)
+  })
 })
-// io.on("connection",(socket)=>{
-//     console.log(`User connected: ${socket.id}`)
-//    socket.on("join_room",(data)=>{
-//     socket.join(data)
-//     console.log(`user with id: ${socket.id} joined room: ${data}`)
-//    })
-//    socket.on("send_message",(data)=>{
-//     socket.to(data.room).emit("receive_msg", data)
-    
-//    })
 
-//     socket.on("disconnect",()=>{
-//         console.log("User disconnected", socket.id)
-//     })
-// })
-
-
-
-server.listen(port,()=>{
-    console.log(`server runing on port ${port}`)
+server.listen(port, () => {
+  console.log(`server runing on port ${port}`)
 })
