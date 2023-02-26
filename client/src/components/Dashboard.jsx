@@ -66,8 +66,6 @@ export default function Dashboard({ socket, accessToken }) {
                   return [...prev, newSong];
                 }
               });
-              
-          console.log(songs)
         })
         .catch((error) => {
           console.log(error);

@@ -3,7 +3,6 @@ import { Alert } from "@mui/material";
 
 export default function Countdown( {onCountdownEnd} ) {
   const [timeRemaining, setTimeRemaining] = useState(5 * 60); // 5 minutes in seconds
-    console.log(typeof(onCountdownEnd))
   useEffect(() => {
     const intervalId = setInterval(() => {
       setTimeRemaining(prevTime => prevTime - 1);
