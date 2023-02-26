@@ -10,9 +10,6 @@ return (
                 <span className="text-blue-400 text-2xl font-sans font-bold">RAVE</span>
             </h2>
         </Link>
-        <button className="bg-white text-blue-900 border border-blue-900 font-bold py-3 px-6 rounded-lg hover:bg-blue-400 hover:text-white">
-            LOGIN as DJ
-        </button>
     </div>
 );
 }
